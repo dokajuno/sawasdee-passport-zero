@@ -2,7 +2,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import QRCode from 'qrcode.react';
+import { QRCode } from 'qrcode.react';
 
 interface QRCodeModalProps {
   isOpen: boolean;
