@@ -2,7 +2,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface QRCodeModalProps {
   isOpen: boolean;
@@ -34,12 +34,11 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, proofType, proofMessa
         </div>
         
         <div className="bg-white p-4 rounded-lg mb-4">
-          <QRCode 
+          <QRCodeSVG 
             value={proofMessage} 
             size={200} 
             level="H" 
-            includeMargin={true} 
-            renderAs="svg" 
+            includeMargin={true}
             className="w-full h-auto"
           />
         </div>
