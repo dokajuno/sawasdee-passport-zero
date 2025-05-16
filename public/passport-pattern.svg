@@ -1,0 +1,14 @@
+
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <pattern id="pattern" width="100" height="100" patternUnits="userSpaceOnUse">
+    <path d="M10 10C15 20 20 15 25 10S30 5 35 10s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M10 35C15 45 20 40 25 35S30 30 35 35s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M10 60C15 70 20 65 25 60S30 55 35 60s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M10 85C15 95 20 90 25 85S30 80 35 85s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M50 10C55 20 60 15 65 10S70 5 75 10s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M50 35C55 45 60 40 65 35S70 30 75 35s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M50 60C55 70 60 65 65 60S70 55 75 60s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+    <path d="M50 85C55 95 60 90 65 85S70 80 75 85s10 10 15 0" stroke="currentColor" fill="none" stroke-width="0.5" stroke-opacity="0.5"/>
+  </pattern>
+  <rect width="100%" height="100%" fill="url(#pattern)"/>
+</svg>
