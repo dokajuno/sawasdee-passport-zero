@@ -10,11 +10,11 @@ import samplePhoto from '../assets/sample-passport-photo.png';
 const Identity = () => {
   const [identities, setIdentities] = useState<PassportData[]>([
     {
-      firstName: "Chonlarnatt",
-      lastName: "Poonchattakarn",
-      dateOfBirth: "1988-06-03",
+      firstName: "Ploypitcha",
+      lastName: "Boontavipitak",
+      dateOfBirth: "1988-06-29",
       nationality: "Thailand",
-      gender: "Male",
+      gender: "Female",
       passportNumber: "AC773241",
       expiryDate: "2033-03-29",
       photo: samplePhoto

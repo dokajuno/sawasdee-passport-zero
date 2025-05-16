@@ -16,11 +16,11 @@ const ZKProofs = () => {
   
   // In a real app, this would come from your state management
   const passportData: PassportData = {
-    firstName: "Chonlarnatt",
-    lastName: "Poonchattakarn",
-    dateOfBirth: "1988-06-03",
+    firstName: "Ploypitcha",
+    lastName: "Boontavipitak",
+    dateOfBirth: "1988-06-29",
     nationality: "Thailand",
-    gender: "Male",
+    gender: "Female",
     passportNumber: "AC773241",
     expiryDate: "2033-03-29",
     photo: samplePhoto

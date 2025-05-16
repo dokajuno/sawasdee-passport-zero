@@ -36,11 +36,11 @@ const NFCReader: React.FC<NFCReaderProps> = ({ onReadComplete }) => {
     setTimeout(() => {
       // In a real app, we would read actual passport data here
       const sampleData: PassportData = {
-        firstName: "Chonlarnatt",
-        lastName: "Poonchattakarn",
-        dateOfBirth: "1988-06-03",
+        firstName: "Ploypitcha",
+        lastName: "Boontavipitak",
+        dateOfBirth: "1988-06-29",
         nationality: "Thailand",
-        gender: "Male",
+        gender: "Female",
         passportNumber: "AB114346",
         expiryDate: "2033-03-29",
         photo: samplePhoto
