@@ -18,7 +18,7 @@ const ZKProofs = () => {
   const passportData: PassportData = {
     firstName: "Ploypitcha",
     lastName: "Boontavipitak",
-    dateOfBirth: "1988-06-29",
+    dateOfBirth: "1990-06-29",
     nationality: "Thailand",
     gender: "Female",
     passportNumber: "AC773241",
