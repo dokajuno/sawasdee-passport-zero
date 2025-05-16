@@ -17,19 +17,19 @@ interface ProofType {
 
 const proofTypes: ProofType[] = [
   {
-    id: 'age',
+    id: 'Age',
     description: 'Prove you\'re over 18 without revealing your age'
   },
   {
-    id: 'country',
+    id: 'Country',
     description: 'Prove the country listed on your passport'
   },
   {
-    id: 'name',
+    id: 'Name',
     description: 'Prove your first and last name'
   },
   {
-    id: 'image',
+    id: 'Image',
     description: 'Verify your identity without revealing your photo'
   },
 ];
@@ -61,13 +61,13 @@ const ZKProofSelector: React.FC<ZKProofSelectorProps> = ({ data, onGenerateProof
         proofs: selectedProofs.map(id => {
           switch (id) {
             case 'age':
-              return { type: 'age', value: 'isOver18:true' };
+              return { type: 'Age', value: 'isOver18:true' };
             case 'country':
-              return { type: 'country', value: `country:${data.nationality}` };
+              return { type: 'Country', value: `country:${data.nationality}` };
             case 'name':
-              return { type: 'name', value: 'nameVerified:true' };
+              return { type: 'Name', value: 'nameVerified:true' };
             case 'image':
-              return { type: 'image', value: 'faceVerified:true' };
+              return { type: 'Image', value: 'faceVerified:true' };
             default:
               return null;
           }
