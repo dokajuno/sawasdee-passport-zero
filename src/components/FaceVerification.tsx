@@ -1,8 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Camera, CheckCircle2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import Webcam from 'react-webcam';
 
 interface FaceVerificationProps {
   onVerificationComplete: () => void;
@@ -12,6 +12,7 @@ const FaceVerification: React.FC<FaceVerificationProps> = ({ onVerificationCompl
   const [isVerifying, setIsVerifying] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [cameraOpen, setCameraOpen] = useState(false);
+  const webcamRef = useRef<Webcam>(null);
   
   const handleStartVerification = () => {
     setCameraOpen(true);
@@ -25,9 +26,9 @@ const FaceVerification: React.FC<FaceVerificationProps> = ({ onVerificationCompl
         toast.success("Face verification successful!");
         setIsVerifying(false);
         setIsComplete(true);
-        setCameraOpen(false);
         
         setTimeout(() => {
+          setCameraOpen(false);
           onVerificationComplete();
         }, 1000);
       }, 3000);
@@ -45,16 +46,27 @@ const FaceVerification: React.FC<FaceVerificationProps> = ({ onVerificationCompl
       <div className="relative z-10 flex flex-col items-center w-full">
         {cameraOpen ? (
           <div className="relative w-full max-w-sm aspect-[3/4] mb-6 border-2 border-primary/70 rounded-lg overflow-hidden glass">
-            <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-              {isVerifying ? (
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: "user", // Use front camera
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+              }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            
+            {/* Scanning overlay */}
+            {isVerifying && (
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                 <div className="flex flex-col items-center">
                   <div className="w-32 h-32 border-4 border-dashed rounded-full border-primary animate-spin mb-4"></div>
                   <div className="text-white">Scanning face...</div>
                 </div>
-              ) : (
-                <Camera size={64} className="text-white/60" />
-              )}
-            </div>
+              </div>
+            )}
             
             {/* Guide overlay */}
             <div className="absolute inset-0 pointer-events-none">

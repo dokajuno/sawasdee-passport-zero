@@ -27,12 +27,13 @@ const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
     setIsScanning(true);
     toast.info("Scanning passport MRZ...");
 
+    // Automatically proceed to the next step after 5 seconds
     setTimeout(() => {
       const isEPassport = true; // Simulated result
       toast.success("E-passport detected!");
       setIsScanning(false);
       onScanComplete(isEPassport);
-    }, 3000);
+    }, 5000);
   };
 
   const handleFaceRecognition = async () => {
@@ -56,19 +57,31 @@ const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10"></div>
       <div className="relative z-10 flex flex-col items-center">
         {isScanning ? (
-          <div className="relative w-full max-w-xs aspect-[4/3] mb-6 border-2 border-primary/70 rounded-lg overflow-hidden glass">
-            <div className="absolute inset-0 bg-black/20"></div>
-            <div className="absolute inset-x-0 h-0.5 bg-primary top-1/2 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
-            <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
-            <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
-            <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
-            <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
-            <div className="absolute bottom-4 left-0 right-0 text-center">
-              <div className="bg-black/60 text-white text-xs py-1 px-2 rounded-full inline-block">
-                Position MRZ in frame
-              </div>
-            </div>
-          </div>
+          <Webcam
+            ref={webcamRef}
+            audio={false}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{ 
+              facingMode: "environment" // Use rear camera for MRZ scanning
+            }}
+            className="relative w-full max-w-xs aspect-[4/3] mb-6 border-2 border-primary/70 rounded-lg overflow-hidden glass"
+          >
+            {({ getScreenshot }) => (
+              <>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-x-0 h-0.5 bg-primary top-1/2 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+                <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
+                <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
+                <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
+                <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <div className="bg-black/60 text-white text-xs py-1 px-2 rounded-full inline-block">
+                    Position MRZ in frame
+                  </div>
+                </div>
+              </>
+            )}
+          </Webcam>
         ) : isFaceRecognition ? (
           <Webcam
             ref={webcamRef}
