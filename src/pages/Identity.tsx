@@ -14,9 +14,9 @@ const Identity = () => {
       lastName: "Poonchattakarn",
       dateOfBirth: "1988-06-03",
       nationality: "Thailand",
-      gender: "Female",
-      passportNumber: "TH1234567",
-      expiryDate: "2033-01-14",
+      gender: "Male",
+      passportNumber: "AC773241",
+      expiryDate: "2033-03-29",
       photo: samplePhoto
     }
   ]);
