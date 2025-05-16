@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -62,20 +61,20 @@ const ZKProofs = () => {
         </div>
         <Button 
           variant="outline" 
-          size="sm" 
-          className={`flex items-center gap-1 ${locationSharing ? 'text-green-500' : 'text-muted-foreground'}`}
+          size="lg" 
+          className={`flex items-center gap-2 ${locationSharing ? 'text-green-500 border-green-500' : 'text-red-500 border-red-500'}`}
           onClick={toggleLocationSharing}
         >
-          <Share2 className="h-4 w-4" />
+          <Share2 className="h-5 w-5" />
           {locationSharing ? (
             <>
               <span>Location On</span>
-              <ToggleRight className="h-4 w-4 ml-1" />
+              <ToggleRight className="h-5 w-5 ml-2" />
             </>
           ) : (
             <>
               <span>Location Off</span>
-              <ToggleLeft className="h-4 w-4 ml-1" />
+              <ToggleLeft className="h-5 w-5 ml-2" />
             </>
           )}
         </Button>
