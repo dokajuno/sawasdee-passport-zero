@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Scan, User, Settings } from 'lucide-react';
+import { Home, Scan, User, Settings, Lock } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const BottomNavigation = () => {
@@ -10,6 +10,7 @@ const BottomNavigation = () => {
     { icon: Home, label: 'Home', path: '/' },
     { icon: Scan, label: 'Scan', path: '/scan' },
     { icon: User, label: 'Identity', path: '/identity' },
+    { icon: Lock, label: 'ZK Proofs', path: '/zkproofs' },
     { icon: Settings, label: 'Settings', path: '/settings' }
   ];
   
@@ -23,7 +24,7 @@ const BottomNavigation = () => {
             <Link 
               key={item.path} 
               to={item.path}
-              className={`flex flex-col items-center justify-center w-1/4 ${
+              className={`flex flex-col items-center justify-center w-1/5 ${
                 isActive ? 'text-primary' : 'text-muted-foreground'
               }`}
             >

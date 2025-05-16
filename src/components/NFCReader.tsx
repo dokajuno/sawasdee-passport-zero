@@ -21,17 +21,18 @@ const NFCReader: React.FC<NFCReaderProps> = ({ onReadComplete }) => {
     // Simulate NFC reading process
     toast.info("Reading e-passport chip...");
     
-    // Simulate progress
+    // Simulate progress - faster now (200ms interval instead of 300ms)
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        return prev + 10;
+        return prev + 20; // Increased increment from 10 to 20
       });
-    }, 300);
+    }, 200);
     
+    // Reduced time from 3000ms to 1500ms
     setTimeout(() => {
       // In a real app, we would read actual passport data here
       const sampleData: PassportData = {
@@ -49,7 +50,7 @@ const NFCReader: React.FC<NFCReaderProps> = ({ onReadComplete }) => {
       setIsReading(false);
       onReadComplete(sampleData);
       clearInterval(interval);
-    }, 3000);
+    }, 1500);
   };
   
   return (
