@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { PassportData } from '@/types/passport';
 import { toast } from 'sonner';
 import { CheckCircle2 } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ZKProofSelectorProps {
   data: PassportData;
@@ -40,27 +41,55 @@ const proofTypes: ProofType[] = [
 ];
 
 const ZKProofSelector: React.FC<ZKProofSelectorProps> = ({ data, onGenerateProof }) => {
-  const [selectedProof, setSelectedProof] = useState<string | null>(null);
+  const [selectedProofs, setSelectedProofs] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   
+  const handleToggleProof = (proofId: string) => {
+    setSelectedProofs(prev => 
+      prev.includes(proofId) 
+        ? prev.filter(id => id !== proofId) 
+        : [...prev, proofId]
+    );
+  };
+  
   const handleGenerateProof = () => {
-    if (!selectedProof) return;
+    if (selectedProofs.length === 0) {
+      toast.error("Please select at least one proof type");
+      return;
+    }
     
     setIsGenerating(true);
     toast.info("Generating zero-knowledge proof...");
     
     setTimeout(() => {
       // In a real app, we would generate an actual ZK proof here
-      const proofMessages: Record<string, string> = {
-        age: `{"pubSignal":["0x1a2b3c...","isOver18:true"],"proof":"0x7f8e9d..."}`,
-        country: `{"pubSignal":["0x4d5e6f...","country:${data.nationality}"],"proof":"0x1a2b3c..."}`,
-        name: `{"pubSignal":["0xa1b2c3...","nameVerified:true"],"proof":"0xd4e5f6..."}`,
-        image: `{"pubSignal":["0x7a8b9c...","faceVerified:true"],"proof":"0x4d5e6f..."}`
+      const proofData = {
+        proofs: selectedProofs.map(id => {
+          switch (id) {
+            case 'age':
+              return { type: 'age', value: 'isOver18:true' };
+            case 'country':
+              return { type: 'country', value: `country:${data.nationality}` };
+            case 'name':
+              return { type: 'name', value: 'nameVerified:true' };
+            case 'image':
+              return { type: 'image', value: 'faceVerified:true' };
+            default:
+              return null;
+          }
+        }).filter(Boolean)
       };
       
-      const message = proofMessages[selectedProof];
+      const proofMessage = JSON.stringify({
+        pubSignal: ["0x7f8e9d..."],
+        proofs: proofData.proofs,
+        proof: "0x4d5e6f..."
+      });
+      
       setIsGenerating(false);
-      onGenerateProof(selectedProof, message);
+      
+      // Using the first selected proof as the primary type
+      onGenerateProof(selectedProofs.join(','), proofMessage);
     }, 2000);
   };
   
@@ -75,20 +104,27 @@ const ZKProofSelector: React.FC<ZKProofSelectorProps> = ({ data, onGenerateProof
         {proofTypes.map((type) => (
           <div 
             key={type.id}
-            onClick={() => setSelectedProof(type.id)}
+            onClick={() => handleToggleProof(type.id)}
             className={`
               p-4 rounded-xl cursor-pointer transition-all
-              ${selectedProof === type.id 
+              ${selectedProofs.includes(type.id) 
                 ? 'glass border-primary glow' 
                 : 'border border-border/40 hover:border-border/80'}
             `}
           >
             <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">{type.title}</h4>
-                <p className="text-xs text-muted-foreground">{type.description}</p>
+              <div className="flex items-center">
+                <Checkbox 
+                  checked={selectedProofs.includes(type.id)} 
+                  onCheckedChange={() => {}}
+                  className="mr-3"
+                />
+                <div>
+                  <h4 className="font-medium">{type.title}</h4>
+                  <p className="text-xs text-muted-foreground">{type.description}</p>
+                </div>
               </div>
-              {selectedProof === type.id && (
+              {selectedProofs.includes(type.id) && (
                 <CheckCircle2 className="h-5 w-5 text-primary" />
               )}
             </div>
@@ -98,10 +134,10 @@ const ZKProofSelector: React.FC<ZKProofSelectorProps> = ({ data, onGenerateProof
       
       <Button
         onClick={handleGenerateProof}
-        disabled={!selectedProof || isGenerating}
+        disabled={selectedProofs.length === 0 || isGenerating}
         className="w-full purple-gradient hover:opacity-90"
       >
-        {isGenerating ? 'Generating...' : 'Generate Proof'}
+        {isGenerating ? 'Generating...' : `Generate ${selectedProofs.length > 0 ? selectedProofs.length : ''} Proof${selectedProofs.length !== 1 ? 's' : ''}`}
       </Button>
     </div>
   );
