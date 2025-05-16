@@ -5,19 +5,20 @@ import NFCReader from '@/components/NFCReader';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FaceVerification from '@/components/FaceVerification';
-import LocationVerification from '@/components/LocationVerification';
+import { PassportData } from '@/types/passport';
 
 enum ScanStep {
   MRZ,
   NFC,
-  FACE,
-  LOCATION
+  FACE
 }
 
 const Scan = () => {
   const [currentStep, setCurrentStep] = useState<ScanStep>(ScanStep.MRZ);
+  const [scannedData, setScannedData] = useState<PassportData | null>(null);
+  const navigate = useNavigate();
   
   const handleMRZScanComplete = (isEPassport: boolean) => {
     if (isEPassport) {
@@ -27,17 +28,17 @@ const Scan = () => {
     }
   };
 
-  const handleNFCReadComplete = (data: any) => {
+  const handleNFCReadComplete = (data: PassportData) => {
+    setScannedData(data);
     setCurrentStep(ScanStep.FACE);
   };
   
   const handleFaceVerificationComplete = () => {
-    setCurrentStep(ScanStep.LOCATION);
-  };
-  
-  const handleLocationVerificationComplete = () => {
-    // Navigate to identity page
-    window.location.href = "/identity";
+    // Navigate to identity page with the scanned data
+    toast.success("Identity verification complete!");
+    
+    // In a real app, we would store this data securely or pass it through a state manager
+    navigate("/identity");
   };
   
   return (
@@ -53,11 +54,10 @@ const Scan = () => {
             {currentStep === ScanStep.MRZ && "Scan Passport"}
             {currentStep === ScanStep.NFC && "Read e-Passport Chip"}
             {currentStep === ScanStep.FACE && "Face Verification"}
-            {currentStep === ScanStep.LOCATION && "Location Verification"}
           </h1>
         </div>
         <div className="flex space-x-1">
-          {[0, 1, 2, 3].map((step) => (
+          {[0, 1, 2].map((step) => (
             <div
               key={step}
               className={`h-1 rounded-full ${
@@ -82,10 +82,6 @@ const Scan = () => {
       
       {currentStep === ScanStep.FACE && (
         <FaceVerification onVerificationComplete={handleFaceVerificationComplete} />
-      )}
-      
-      {currentStep === ScanStep.LOCATION && (
-        <LocationVerification onVerificationComplete={handleLocationVerificationComplete} />
       )}
     </div>
   );

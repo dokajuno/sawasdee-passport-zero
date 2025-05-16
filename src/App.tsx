@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Scan from "./pages/Scan";
 import Identity from "./pages/Identity";
+import ZKProofs from "./pages/ZKProofs";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import BottomNavigation from "./components/BottomNavigation";
@@ -25,6 +26,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/scan" element={<Scan />} />
         <Route path="/identity" element={<Identity />} />
+        <Route path="/zkproofs" element={<ZKProofs />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
