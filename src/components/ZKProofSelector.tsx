@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { PassportData } from '@/types/passport';
@@ -13,29 +12,24 @@ interface ZKProofSelectorProps {
 
 interface ProofType {
   id: string;
-  title: string;
   description: string;
 }
 
 const proofTypes: ProofType[] = [
   {
     id: 'age',
-    title: 'Proof of Age',
     description: 'Prove you\'re over 18 without revealing your age'
   },
   {
     id: 'country',
-    title: 'Proof of Country',
     description: 'Prove the country listed on your passport'
   },
   {
     id: 'name',
-    title: 'Proof of Name',
     description: 'Prove your first and last name'
   },
   {
     id: 'image',
-    title: 'Proof of Image',
     description: 'Verify your identity without revealing your photo'
   },
 ];
@@ -120,7 +114,7 @@ const ZKProofSelector: React.FC<ZKProofSelectorProps> = ({ data, onGenerateProof
                   className="mr-3"
                 />
                 <div>
-                  <h4 className="font-medium">{type.title}</h4>
+                  <h4 className="font-medium">{type.id}</h4>
                   <p className="text-xs text-muted-foreground">{type.description}</p>
                 </div>
               </div>

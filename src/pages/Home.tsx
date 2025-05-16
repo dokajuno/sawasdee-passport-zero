@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
@@ -8,19 +7,15 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const features = [
     {
-      title: 'Zero Knowledge Proofs',
       description: 'Verify information without revealing sensitive data'
     },
     {
-      title: 'E-Passport Verification',
       description: 'Scan and verify electronic passport data securely'
     },
     {
-      title: 'Secure Identity',
       description: 'Keep your identity safe with cryptographic technology'
     },
     {
-      title: 'Privacy Control',
       description: 'Choose what information to share and with whom'
     }
   ];
@@ -49,8 +44,7 @@ const Home = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {features.map((feature, index) => (
           <div key={index} className="glass p-4 rounded-xl">
-            <h3 className="font-bold mb-2">{feature.title}</h3>
-            <p className="text-sm text-muted-foreground">{feature.description}</p>
+            <h3 className="font-bold mb-2">{feature.description}</h3>
           </div>
         ))}
       </div>
