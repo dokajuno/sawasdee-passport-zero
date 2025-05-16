@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import ZKProofs from "./pages/ZKProofs";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import BottomNavigation from "./components/BottomNavigation";
+import RelyingParty from "./pages/RelyingParty";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/identity" element={<Identity />} />
         <Route path="/zkproofs" element={<ZKProofs />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/rp" element={<RelyingParty />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       

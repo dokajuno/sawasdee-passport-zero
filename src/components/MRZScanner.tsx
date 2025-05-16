@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import Webcam from 'react-webcam';
-import * as faceapi from 'face-api.js';
 
 interface MRZScannerProps {
   onScanComplete: (isEPassport: boolean) => void;
@@ -11,17 +10,7 @@ interface MRZScannerProps {
 
 const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
   const [isScanning, setIsScanning] = useState(false);
-  const [isFaceRecognition, setIsFaceRecognition] = useState(false);
   const webcamRef = useRef<Webcam>(null);
-
-  useEffect(() => {
-    const loadModels = async () => {
-      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-      await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-    };
-    loadModels();
-  }, []);
 
   const handleScan = () => {
     setIsScanning(true);
@@ -34,22 +23,6 @@ const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
       setIsScanning(false);
       onScanComplete(isEPassport);
     }, 5000);
-  };
-
-  const handleFaceRecognition = async () => {
-    setIsFaceRecognition(true);
-    toast.info("Starting face recognition...");
-
-    const video = webcamRef.current?.video;
-    if (video) {
-      const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
-      if (detections.length > 0) {
-        toast.success("Face recognized successfully!");
-      } else {
-        toast.error("No face detected. Please try again.");
-      }
-    }
-    setIsFaceRecognition(false);
   };
 
   return (
@@ -82,14 +55,6 @@ const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
               </>
             )}
           </Webcam>
-        ) : isFaceRecognition ? (
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{ facingMode: "user" }}
-            className="relative w-full max-w-xs aspect-[4/3] mb-6 border-2 border-primary/70 rounded-lg overflow-hidden glass"
-          />
         ) : (
           <Camera size={80} className="text-primary mb-4" />
         )}
@@ -98,20 +63,13 @@ const MRZScanner: React.FC<MRZScannerProps> = ({ onScanComplete }) => {
         <p className="text-sm text-center text-muted-foreground mb-6">
           Scan the Machine Readable Zone (MRZ) on your passport to verify if it's an e-passport
         </p>
-        <div className="w-full max-w-sm flex justify-center space-x-4">
+        <div className="w-full max-w-sm flex justify-center">
           <Button 
             onClick={handleScan} 
-            disabled={isScanning || isFaceRecognition}
+            disabled={isScanning}
             className="purple-gradient px-8 py-6 hover:opacity-90 glow"
           >
             {isScanning ? 'Scanning...' : 'Start Scanning'}
-          </Button>
-          <Button 
-            onClick={handleFaceRecognition} 
-            disabled={isScanning || isFaceRecognition}
-            className="blue-gradient px-8 py-6 hover:opacity-90 glow"
-          >
-            {isFaceRecognition ? 'Recognizing...' : 'Face Recognition'}
           </Button>
         </div>
       </div>
